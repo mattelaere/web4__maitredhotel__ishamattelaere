@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import CounterButton from "./components/CounterButton";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router";
-import Tables from "./components/Details";
+import Tables from "./components/Tables";
 import Edit from "./components/Edit";
 
 function App() {

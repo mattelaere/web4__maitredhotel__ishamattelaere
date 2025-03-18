@@ -1,11 +1,6 @@
-const Edit = ({ setCount }) => {
+const Edit = () => {
   return (
-    <article>
-      <h2>Update the count</h2>
-      <button onClick={() => setCount((prev) => prev + 1)}>
-        Add 1 to the count
-      </button>
-    </article>
+   <h1>meals</h1>
   );
 };
 
