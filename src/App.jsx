@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <h1>Monsieur Butler</h1>
+      <h1>Bonjour Butler</h1>
       <div className="tables__card">
         <CounterButton count={count} setCount={setCount} />
       </div>
