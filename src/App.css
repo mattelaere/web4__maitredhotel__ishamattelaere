@@ -49,8 +49,9 @@
 }
 
 .overview{
-  display: flex;
-    flex-direction: row;
+  display: grid;
+    grid-template-columns: 1fr 11fr;
+    
 }
 
 
@@ -60,6 +61,8 @@
 
 .nav{
   padding-right: 2rem;
+  grid-column: 1/2;
+
 }
 
 h1{
@@ -68,4 +71,8 @@ h1{
 
 article{
   padding: 2rem;
+}
+
+.rest{
+  grid-column: 2/3;
 }

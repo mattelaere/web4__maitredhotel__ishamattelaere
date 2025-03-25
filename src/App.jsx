@@ -1,18 +1,39 @@
 import { useState } from "react";
 import "./App.css";
-import CounterButton from "./components/CounterButton";
+import initialRestaurant from "./restaurant";
 import { Routes, Route, NavLink } from "react-router";
-import Tables from "./components/Tables";
-import Edit from "./components/Edit";
+
+import Room from "./components/Room";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [restaurant, setRestaurant] = useState(initialRestaurant);
+
+  const handleMealTableChange = (employeeId, teamId) => {
+    const tmpRestaurant = structuredClone(restaurant);
+    removeMealFromTable(employeeId, tmpRestaurant.tables);
+    addMealToTable(employeeId, teamId, tmpRestaurant.tables);
+    setRestaurant(tmpRestaurant);
+  };
+
+  const removeMealFromTable = (mealId, tables) => {
+    Object.values(tables).forEach((table) => {
+      const index = table.mealIds.indexOf(mealId);
+      if (index !== -1) {
+        table.mealIds.splice(index, 1);
+      }
+    });
+  };
+
+  const addMealToTable = (mealId, tableId, tables) => {
+    tables[tableId].mealIds.push(mealId);
+  };
+
 
   return (
     <>
-      <h1>Bonjour Butler</h1>
+      
       <div className="tables__card">
-        <CounterButton count={count} setCount={setCount} />
+       
       </div>
       <div className="overview" >
         <nav className="nav">
@@ -25,16 +46,31 @@ function App() {
             </li>
           </ul>
         </nav>
-        <div>
+        <div className="rest">
           
 
           <div className="container">
-            
+{/*             
               <Routes>
                 <Route path="/" element={<Tables />} />
-                <Route path="/edit" element={<Edit setCount={setCount} />} />
-              </Routes>
-            
+                <Route path="/edit" element={<Edit  />} />
+              </Routes> */}
+            <h1>{restaurant.name}</h1>
+            <div className="cols">
+              <section>
+                {Object.values(restaurant.rooms).map((room) => (
+                  <Room
+                    key={room.id}
+                    room={room}
+                    allTables={restaurant.tables}
+                    allMeals={restaurant.meals}
+                    onMealTableChange={handleMealTableChange}
+                  />
+                ))}
+              </section>
+              {/* <pre>{JSON.stringify(restaurant, null, 2)}</pre> */}
+            </div>
+          
           </div>
         </div>
       </div>
