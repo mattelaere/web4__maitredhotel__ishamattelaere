@@ -4,7 +4,7 @@ const Room = ({
     room,
     allTables,
     allMeals,
-    onMealTableChange,
+    toggleMealOnTable,
 }) => {
     return (
         <article>
@@ -16,7 +16,7 @@ const Room = ({
                     {...allTables[tableId]}
                     allTables={allTables}
                     allMeals={allMeals}
-                    onMealTableChange={onMealTableChange}
+                    toggleMealOnTable={toggleMealOnTable}
                 />
             ))}
         </article>

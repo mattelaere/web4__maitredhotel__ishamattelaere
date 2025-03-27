@@ -8,25 +8,25 @@ import Room from "./components/Room";
 function App() {
   const [restaurant, setRestaurant] = useState(initialRestaurant);
 
-  const handleMealTableChange = (employeeId, teamId) => {
+  const toggleMealOnTable = (mealId, tableId) => {
     const tmpRestaurant = structuredClone(restaurant);
-    removeMealFromTable(employeeId, tmpRestaurant.tables);
-    addMealToTable(employeeId, teamId, tmpRestaurant.tables);
+    const table = tmpRestaurant.tables[tableId];
+
+    
+    const mealIndex = table.mealIds.indexOf(mealId);
+
+    if (mealIndex !== -1) {
+      
+      table.mealIds.splice(mealIndex, 1);
+    } else {
+      table.mealIds.push(mealId);
+    }
+
     setRestaurant(tmpRestaurant);
   };
 
-  const removeMealFromTable = (mealId, tables) => {
-    Object.values(tables).forEach((table) => {
-      const index = table.mealIds.indexOf(mealId);
-      if (index !== -1) {
-        table.mealIds.splice(index, 1);
-      }
-    });
-  };
 
-  const addMealToTable = (mealId, tableId, tables) => {
-    tables[tableId].mealIds.push(mealId);
-  };
+  
 
 
   return (
@@ -64,11 +64,11 @@ function App() {
                     room={room}
                     allTables={restaurant.tables}
                     allMeals={restaurant.meals}
-                    onMealTableChange={handleMealTableChange}
+                    toggleMealOnTable={toggleMealOnTable}
                   />
                 ))}
               </section>
-              {/* <pre>{JSON.stringify(restaurant, null, 2)}</pre> */}
+             
             </div>
           
           </div>
