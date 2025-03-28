@@ -14,20 +14,6 @@
 
 
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
 .tables__card {
   padding: 1rem;
@@ -37,50 +23,50 @@
   color: #888;
 }
 
-.tables{
+.tables {
   display: flex;
   flex-direction: row;
   gap: 3rem;
   padding: 1rem;
 }
 
-.overview{
+.overview {
   display: grid;
-    grid-template-columns: 1fr 11fr;
-    
+  grid-template-columns: 1fr 11fr;
+
 }
 
 
-.slogan{
-  font-size:0.9rem;
+.slogan {
+  font-size: 0.9rem;
 }
 
-.nav{
+.nav {
   padding-right: 2rem;
   grid-column: 1/2;
 
 }
 
-h1{
+h1 {
   margin: 1rem;
 }
 
-article{
+article {
   padding-left: 2rem;
-  
+
 }
 
-.rest{
+.rest {
   grid-column: 2/3;
 }
 
 
 
-.edit__h2{
-      margin-left: 2rem;
+.edit__h2 {
+  margin-left: 2rem;
 }
 
-.tables__overview{
+.tables__overview {
   padding: 3rem;
 }
 
@@ -98,15 +84,20 @@ article{
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+
 .available {
-  background-color: #d4edda;
+  background-color: #47604d;
   border: 1px solid #c3e6cb;
 }
 
 .occupied {
-  background-color: #f8d7da;
+  background-color: #87262e;
   border: 1px solid #f5c6cb;
 }
+
+
+
 
 .table__details {
   margin-top: 0.75rem;
@@ -159,6 +150,7 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .table__header {
   display: flex;
   justify-content: space-between;
@@ -178,7 +170,7 @@ button:disabled {
 
 .meal__price {
   font-weight: bold;
-  color: #555;
+  color: #cccccc;
 }
 
 .meal__quantity {
@@ -195,7 +187,7 @@ button:disabled {
 
 
 .tables__overview {
-  margin: 20px 0;
+  margin: 1.5rem 0;
 }
 
 .room__section {
@@ -208,9 +200,9 @@ button:disabled {
 }
 
 .tables__list li {
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  border-radius: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
@@ -228,16 +220,64 @@ button:disabled {
 
 .total__bill {
   font-weight: bold;
+  margin-top: 0.25rem;
+}
+
+.table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.clear__table__btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.clear__table__btn:hover {
+  background-color: #c82333;
+}
+
+.signature__dish__notice {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #856404;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+.signature__dish__name {
+  display: block;
+  font-style: italic;
   margin-top: 5px;
 }
 
+@media (prefers-color-scheme: light) {
+
+  .available {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+  }
+
+  .occupied {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+  }
+
+  .meal__price {
+    font-weight: bold;
+    color: #555;
+  }
 
 
-
-
-
-
-
-
-
-
+}

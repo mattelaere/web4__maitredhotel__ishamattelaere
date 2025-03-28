@@ -9,6 +9,7 @@ const Table = ({
   occupancy,
   mealIds,
   allMeals,
+  signatureDishId,
   toggleMealOnTable,
   updateTableOccupancy
 }) => {
@@ -35,12 +36,19 @@ const Table = ({
   const mealQuantities = getMealQuantities();
 
   const calculateTotalBill = () => {
-    return localMealIds.reduce((total, mealId) => {
+    let hasSignatureDish = false;
+
+    const total = localMealIds.reduce((total, mealId) => {
+      if (mealId === signatureDishId) {
+        hasSignatureDish = true;
+        return total; // Don't add to the total (it's free)
+      }
       return total + allMeals[mealId].price;
     }, 0);
+    return { total, hasSignatureDish };
   };
 
-  const totalBill = calculateTotalBill();
+  const { total: totalBill, hasSignatureDish } = calculateTotalBill();
 
   const adjustMealQuantity = (mealId, change) => {
     const newQuantity = (mealQuantities[mealId] || 0) + change;
@@ -71,6 +79,11 @@ const Table = ({
         <h3>{name}</h3>
         <div className="table__summary">
           <span>Total Bill: €{totalBill.toFixed(2)}</span>
+          {hasSignatureDish && (
+            <div className="signature__dish__notice">
+              <span>🎉 This table's signature dishordered - It's on the house! 🎉</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -141,7 +154,7 @@ const Table = ({
   );
 };
 
-const MealSelector = ({ allMeals, selectedMealIds, tableId, onMealToggle }) => {
+const MealSelector = ({ allMeals, selectedMealIds, onMealToggle }) => {
   return (
     <div>
       {Object.values(allMeals).map((meal) => (

@@ -25,6 +25,7 @@ const Room = ({
                         allMeals={allMeals}
                         toggleMealOnTable={toggleMealOnTable}
                         updateTableOccupancy={updateTableOccupancy}
+                        signatureDishId={table.signatureDishId}
                     />
                 );
             })}

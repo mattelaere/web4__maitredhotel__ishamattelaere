@@ -1,17 +1,23 @@
 const restaurant = {
     name: "Bonjour Butler",
     rooms: {
-        1: { id: 1, name: "Downstairs", tableIds: [101, 102] },
+        1: { id: 1, name: "Downstairs", tableIds: [101, 102, 103, 104, 105, 106, 107] },
         2: { id: 2, name: "Upstairs", tableIds: [201, 202, 203, 204, 205] },
     },
     tables: {
-        101: { id: 101, name: "Table 1", capacity: 4, occupancy: 0, mealIds: [1001, 1002] },
-        102: { id: 102, name: "Table 2", capacity: 2, occupancy: 2, mealIds: [1003, 1004] },
-        201: { id: 201, name: "Table 3", capacity: 6, occupancy: 4, mealIds: [2001, 2002] },
-        202: { id: 202, name: "Table 4", capacity: 4, occupancy: 0, mealIds: [2001, 2002] },
-        203: { id: 203, name: "Table 5", capacity: 2, occupancy: 2, mealIds: [2001, 2002] },
-        204: { id: 204, name: "Table 6", capacity: 8, occupancy: 6, mealIds: [2001, 1002] },
-        205: { id: 205, name: "Table 7", capacity: 4, occupancy: 0, mealIds: [1004, 1003] },
+        101: { id: 101, name: "Table 1", capacity: 2, occupancy: 0, mealIds: [], signatureDishId: 1001 },
+        102: { id: 102, name: "Table 2", capacity: 2, occupancy: 2, mealIds: [1003, 1004], signatureDishId: 3009 },
+        103: { id: 102, name: "Table 3", capacity: 2, occupancy: 2, mealIds: [1001, 1002], signatureDishId: 3001 },
+        104: { id: 102, name: "Table 4", capacity: 2, occupancy: 2, mealIds: [1002, 1003], signatureDishId: 4002 },
+        105: { id: 102, name: "Table 5", capacity: 2, occupancy: 0, mealIds: [], signatureDishId: 1004 },
+        106: { id: 102, name: "Table 6", capacity: 2, occupancy: 0, mealIds: [], signatureDishId: 1002 },
+        107: { id: 102, name: "Table 7", capacity: 2, occupancy: 2, mealIds: [2002, 1001], signatureDishId: 4010 },
+
+        201: { id: 201, name: "Table 8", capacity: 6, occupancy: 0, mealIds: [], signatureDishId: 4003 },
+        202: { id: 202, name: "Table 9", capacity: 5, occupancy: 0, mealIds: [], signatureDishId: 4004 },
+        203: { id: 203, name: "Table 10", capacity: 6, occupancy: 2, mealIds: [2001, 2002], signatureDishId: 3010 },
+        204: { id: 204, name: "Table 11", capacity: 8, occupancy: 8, mealIds: [3009, 4002, 4006, 4007, 1003, 1001, 2002, 3007, 3005], signatureDishId: 2002 },
+        205: { id: 205, name: "Table 12", capacity: 10, occupancy: 0, mealIds: [], signatureDishId: 1003 },
     },
     meals: {
         1001: { id: 1001, name: "Moules Maritimes", price: 19.50 },

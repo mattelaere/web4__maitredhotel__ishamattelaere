@@ -35,6 +35,20 @@ function App() {
     });
   };
 
+
+  const clearTable = (tableId) => {
+    setRestaurant((prevRestaurant) => {
+      const tmpRestaurant = structuredClone(prevRestaurant);
+      const table = tmpRestaurant.tables[tableId];
+
+      // Clear all meals and reset occupancy
+      table.mealIds = [];
+      table.occupancy = 0;
+
+      return tmpRestaurant;
+    });
+  };
+
   return (
     <>
       
@@ -54,7 +68,7 @@ function App() {
           <div className="container">
             <h1>{restaurant.name}</h1>
             <Routes>
-              <Route path="/" element={<Overview restaurant={restaurant} />} />
+              <Route path="/" element={<Overview restaurant={restaurant} clearTable={clearTable} />}  />
               <Route path="/edit" element={<Edit restaurant={restaurant} toggleMealOnTable={toggleMealOnTable} updateTableOccupancy={updateTableOccupancy}  />} />
             </Routes>
           
