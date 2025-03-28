@@ -1,20 +1,32 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const Table = ({
   id,
   name,
+  capacity,
+  occupancy,
   mealIds,
   allMeals,
   toggleMealOnTable,
+  updateTableOccupancy
 }) => {
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [localMealIds, setLocalMealIds] = useState(mealIds);
+
+  useEffect(() => {
+    if (occupancy === 0) {
+      setLocalMealIds([]);
+    } else {
+      setLocalMealIds(mealIds);
+    }
+  }, [occupancy, mealIds]);
 
   const getMealQuantities = () => {
     const quantities = {};
-    mealIds.forEach(mealId => {
+    localMealIds.forEach(mealId => {
       quantities[mealId] = (quantities[mealId] || 0) + 1;
     });
     return quantities;
@@ -22,56 +34,114 @@ const Table = ({
 
   const mealQuantities = getMealQuantities();
 
-  const adjustMealQuantity = (mealId, change) => {
-    const currentQuantity = mealQuantities[mealId] || 0;
-    const newQuantity = currentQuantity + change;
-
-    if (newQuantity > currentQuantity) {
-      toggleMealOnTable(mealId, id, true); 
-    } else if (newQuantity < currentQuantity && newQuantity > 0) {
-      toggleMealOnTable(mealId, id, false); 
-    } else if (newQuantity <= 0) {
-      for (let i = 0; i < currentQuantity; i++) {
-        toggleMealOnTable(mealId, id, false);
-      }
-    }
+  const calculateTotalBill = () => {
+    return localMealIds.reduce((total, mealId) => {
+      return total + allMeals[mealId].price;
+    }, 0);
   };
 
+  const totalBill = calculateTotalBill();
+
+  const adjustMealQuantity = (mealId, change) => {
+    const newQuantity = (mealQuantities[mealId] || 0) + change;
+    let newMealIds;
+    if (newQuantity <= 0) {
+      
+      newMealIds = localMealIds.filter(id => id !== mealId);
+    } else if (change > 0) {
+      
+      newMealIds = [...localMealIds, mealId];
+    } else {
+      
+      const index = localMealIds.lastIndexOf(mealId);
+      newMealIds = [...localMealIds.slice(0, index), ...localMealIds.slice(index + 1)];
+    }
+
+    setLocalMealIds(newMealIds);
+    toggleMealOnTable(id, newMealIds);
+  };
+
+  const isAvailable = occupancy === 0;
+  const isFull = occupancy === capacity;
+
   return (
-    <article>
-      <h3>{name}</h3>
-      {mealIds.length === 0 ? (
-        <p>No meals on this table</p>
-      ) : (
+    <article className={`table__card ${isAvailable ? 'available' : 'occupied'}`}>
+
+      <div className="table__header">
+        <h3>{name}</h3>
+        <div className="table__summary">
+          <span>Total Bill: €{totalBill.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="occupancy__section">
+        <h4>Occupancy</h4>
+        <div className="occupancy__controls">
+          <button
+            onClick={() => updateTableOccupancy(id, Math.max(0, occupancy - 1))}
+            disabled={occupancy === 0}
+          >
+            -
+          </button>
+          <span className="occupancy__display">
+            {occupancy}/{capacity}
+          </span>
+          <button
+            onClick={() => updateTableOccupancy(id, Math.min(capacity, occupancy + 1))} 
+            disabled={occupancy === capacity}
+          >
+            +
+          </button>
+        </div>
+        <div className="status__indicator">
+          {isAvailable ? 'Available' : isFull ? 'Full' : 'Partially Occupied'}
+        </div>
+      </div>
+
+      {!isAvailable && (
+      <div className="meals__section">
+        <h4>Meals</h4>
+          {localMealIds.length === 0 ? (
+          <p>No meals on this table</p>
+        ) : (
           <ul>
-            {Object.entries(mealQuantities).map(([mealId, quantity]) => (
+                {Object.entries(mealQuantities).map(([mealId, quantity]) => (
               <li key={mealId}>
-                {allMeals[mealId].name} {quantity > 1 ? `(x${quantity})` : ''}
-                {isEditMode && (
-                  <>
-                    <button onClick={() => adjustMealQuantity(mealId, -1)}>-</button>
-                    <button onClick={() => adjustMealQuantity(mealId, 1)}>+</button>
-                  </>
-                )}
+                <div className="meal__info">
+                  <span>{allMeals[mealId].name}</span>
+                      <span className="meal__price"> € {allMeals[mealId].price.toFixed(2)}</span>
+                </div>
+                <div className="meal__quantity">
+                  {quantity > 1 ? `(x${quantity})` : ''}
+                  {isEditMode && (
+                    <>
+                      <button onClick={() => adjustMealQuantity(mealId, -1)}>-</button>
+                      <button onClick={() => adjustMealQuantity(mealId, 1)}>+</button>
+                    </>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
+        )}
+        <button onClick={() => setIsEditMode(!isEditMode)}>
+          {isEditMode ? "Done" : "Edit Meals"}
+        </button>
+          {isEditMode && (
+            <MealSelector
+              allMeals={allMeals}
+              selectedMealIds={mealIds}
+              tableId={id}
+              onMealToggle={(mealId) => adjustMealQuantity(mealId, localMealIds.includes(mealId) ? -1 : 1)}
+            />
+          )}
+      </div>
       )}
-      <button onClick={() => setIsEditMode(!isEditMode)}>
-        {isEditMode ? "Done" : "Edit Meals"}
-      </button>
-      {isEditMode && (
-        <MealSelector
-          allMeals={allMeals}
-          selectedMealIds={mealIds}
-          onMealToggle={(mealId) => toggleMealOnTable(mealId, id, true)}
-        />
-      ) }
     </article>
   );
 };
 
-const MealSelector = ({ allMeals, selectedMealIds, onMealToggle }) => {
+const MealSelector = ({ allMeals, selectedMealIds, tableId, onMealToggle }) => {
   return (
     <div>
       {Object.values(allMeals).map((meal) => (
@@ -81,7 +151,7 @@ const MealSelector = ({ allMeals, selectedMealIds, onMealToggle }) => {
             checked={selectedMealIds.includes(meal.id)}
             onChange={() => onMealToggle(meal.id)}
           />
-          {" " + meal.name}
+          {" " + meal.name} - €{meal.price.toFixed(2)}
         </label>
       ))}
     </div>

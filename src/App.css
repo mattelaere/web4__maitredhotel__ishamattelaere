@@ -66,9 +66,178 @@ h1{
 }
 
 article{
-  padding: 2rem;
+  padding-left: 2rem;
+  
 }
 
 .rest{
   grid-column: 2/3;
 }
+
+
+
+.edit__h2{
+      margin-left: 2rem;
+}
+
+.tables__overview{
+  padding: 3rem;
+}
+
+.tables__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.table__card {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.available {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.occupied {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.table__details {
+  margin-top: 0.75rem;
+}
+
+.table__details p {
+  margin: 0.25rem 0;
+}
+
+.edit__container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+
+.occupancy__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.occupancy__card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.occupancy__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.75rem 0;
+}
+
+.occupancy__display {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.status__indicator {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0.75rem;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table__summary {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.meal__info {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.meal__price {
+  font-weight: bold;
+  color: #555;
+}
+
+.meal__quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.meals__section ul li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+
+.tables__overview {
+  margin: 20px 0;
+}
+
+.room__section {
+  margin-bottom: 30px;
+}
+
+.tables__list {
+  list-style: none;
+  padding: 0;
+}
+
+.tables__list li {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.table__info,
+.table__details {
+  display: flex;
+  flex-direction: column;
+}
+
+.table__name {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.total__bill {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+

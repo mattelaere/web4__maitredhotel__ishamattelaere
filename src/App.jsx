@@ -7,33 +7,33 @@ import { Routes, Route, NavLink } from "react-router";
 
 import Overview from "./components/Overview";
 import Edit from "./components/Edit";
-import Room from "./components/Room";
+
 
 function App() {
   const [restaurant, setRestaurant] = useState(initialRestaurant);
 
-  const toggleMealOnTable = (mealId, tableId, isAdding = true) => {
+  const toggleMealOnTable = (tableId, newMealIds) => {
     setRestaurant((restaurant) => {
     const tmpRestaurant = structuredClone(restaurant);
-    const table = tmpRestaurant.tables[tableId];
-
-    
-      if (isAdding) {
-        table.mealIds.push(mealId);
-      } else {
-        const index = table.mealIds.indexOf(mealId);
-        if (index !== -1) {
-          table.mealIds.splice(index, 1);
-        }
+      if (!tmpRestaurant.tables || !tmpRestaurant.tables[tableId]) {
+        return restaurant; 
       }
+      tmpRestaurant.tables[tableId].mealIds = newMealIds;
 
-    return tmpRestaurant;
+      return tmpRestaurant;
     });
   };
 
+  const updateTableOccupancy = (tableId, newOccupancy) => {
+    setRestaurant((restaurant) => {
+      const tmpRestaurant = structuredClone(restaurant);
+      const table = tmpRestaurant.tables[tableId];
 
-  
+      table.occupancy = Math.max(0, Math.min(table.capacity, newOccupancy));
 
+      return tmpRestaurant;
+    });
+  };
 
   return (
     <>
@@ -43,7 +43,7 @@ function App() {
         <nav className="nav">
           <ul>
             <li>
-              <NavLink to="/">Tables</NavLink>
+              <NavLink to="/">Overview</NavLink>
             </li>
             <li>
               <NavLink to="/edit">Edit</NavLink>
@@ -55,22 +55,9 @@ function App() {
             <h1>{restaurant.name}</h1>
             <Routes>
               <Route path="/" element={<Overview restaurant={restaurant} />} />
-              <Route path="/edit" element={<Edit restaurant={restaurant} toggleMealOnTable={toggleMealOnTable} />} />
+              <Route path="/edit" element={<Edit restaurant={restaurant} toggleMealOnTable={toggleMealOnTable} updateTableOccupancy={updateTableOccupancy}  />} />
             </Routes>
-            {/* <div className="cols">
-              <section>
-                {Object.values(restaurant.rooms).map((room) => (
-                  <Room
-                    key={room.id}
-                    room={room}
-                    allTables={restaurant.tables}
-                    allMeals={restaurant.meals}
-                    toggleMealOnTable={toggleMealOnTable}
-                  />
-                ))}
-              </section>
-             
-            </div> */}
+          
           
           </div>
         </div>

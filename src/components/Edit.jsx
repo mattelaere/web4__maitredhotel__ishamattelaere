@@ -1,11 +1,14 @@
 import React from 'react';
 import Room from './Room';
 
+import '../app.css';
 
-const Edit = ({ restaurant, toggleMealOnTable }) => {
+const Edit = ({ restaurant, toggleMealOnTable, updateTableOccupancy  }) => {
   return (
-    <div className="cols">
-      <section>
+  
+    <div className="edit__container">
+      <section className="meals__section">
+        <h2 className='edit__h2'>Meals by Room</h2>
         {Object.values(restaurant.rooms).map((room) => (
           <Room
             key={room.id}
@@ -13,6 +16,7 @@ const Edit = ({ restaurant, toggleMealOnTable }) => {
             allTables={restaurant.tables}
             allMeals={restaurant.meals}
             toggleMealOnTable={toggleMealOnTable}
+            updateTableOccupancy={updateTableOccupancy}
           />
         ))}
       </section>
