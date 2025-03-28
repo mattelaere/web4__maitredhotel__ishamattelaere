@@ -1,7 +1,7 @@
 import React from 'react';
 import Room from './Room';
 
-import '../app.css';
+import '../App.css';
 
 const Edit = ({ restaurant, toggleMealOnTable, updateTableOccupancy  }) => {
   return (
