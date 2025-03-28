@@ -1,6 +1,22 @@
-const Edit = () => {
+import React from 'react';
+import Room from './Room';
+
+
+const Edit = ({ restaurant, toggleMealOnTable }) => {
   return (
-   <h1>meals</h1>
+    <div className="cols">
+      <section>
+        {Object.values(restaurant.rooms).map((room) => (
+          <Room
+            key={room.id}
+            room={room}
+            allTables={restaurant.tables}
+            allMeals={restaurant.meals}
+            toggleMealOnTable={toggleMealOnTable}
+          />
+        ))}
+      </section>
+    </div>
   );
 };
 

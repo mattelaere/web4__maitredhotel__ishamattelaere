@@ -3,26 +3,32 @@ import "./App.css";
 import initialRestaurant from "./restaurant";
 import { Routes, Route, NavLink } from "react-router";
 
+
+
+import Overview from "./components/Overview";
+import Edit from "./components/Edit";
 import Room from "./components/Room";
 
 function App() {
   const [restaurant, setRestaurant] = useState(initialRestaurant);
 
-  const toggleMealOnTable = (mealId, tableId) => {
+  const toggleMealOnTable = (mealId, tableId, isAdding = true) => {
+    setRestaurant((restaurant) => {
     const tmpRestaurant = structuredClone(restaurant);
     const table = tmpRestaurant.tables[tableId];
 
     
-    const mealIndex = table.mealIds.indexOf(mealId);
+      if (isAdding) {
+        table.mealIds.push(mealId);
+      } else {
+        const index = table.mealIds.indexOf(mealId);
+        if (index !== -1) {
+          table.mealIds.splice(index, 1);
+        }
+      }
 
-    if (mealIndex !== -1) {
-      
-      table.mealIds.splice(mealIndex, 1);
-    } else {
-      table.mealIds.push(mealId);
-    }
-
-    setRestaurant(tmpRestaurant);
+    return tmpRestaurant;
+    });
   };
 
 
@@ -32,9 +38,7 @@ function App() {
   return (
     <>
       
-      <div className="tables__card">
-       
-      </div>
+     
       <div className="overview" >
         <nav className="nav">
           <ul>
@@ -47,16 +51,13 @@ function App() {
           </ul>
         </nav>
         <div className="rest">
-          
-
           <div className="container">
-{/*             
-              <Routes>
-                <Route path="/" element={<Tables />} />
-                <Route path="/edit" element={<Edit  />} />
-              </Routes> */}
             <h1>{restaurant.name}</h1>
-            <div className="cols">
+            <Routes>
+              <Route path="/" element={<Overview restaurant={restaurant} />} />
+              <Route path="/edit" element={<Edit restaurant={restaurant} toggleMealOnTable={toggleMealOnTable} />} />
+            </Routes>
+            {/* <div className="cols">
               <section>
                 {Object.values(restaurant.rooms).map((room) => (
                   <Room
@@ -69,7 +70,7 @@ function App() {
                 ))}
               </section>
              
-            </div>
+            </div> */}
           
           </div>
         </div>
