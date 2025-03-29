@@ -41,7 +41,6 @@ function App() {
       const tmpRestaurant = structuredClone(prevRestaurant);
       const table = tmpRestaurant.tables[tableId];
 
-      // Clear all meals and reset occupancy
       table.mealIds = [];
       table.occupancy = 0;
 

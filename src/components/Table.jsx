@@ -41,7 +41,7 @@ const Table = ({
     const total = localMealIds.reduce((total, mealId) => {
       if (mealId === signatureDishId) {
         hasSignatureDish = true;
-        return total; // Don't add to the total (it's free)
+        return total; 
       }
       return total + allMeals[mealId].price;
     }, 0);
@@ -81,7 +81,7 @@ const Table = ({
           <span>Total Bill: €{totalBill.toFixed(2)}</span>
           {hasSignatureDish && (
             <div className="signature__dish__notice">
-              <span>🎉 This table's signature dishordered - It's on the house! 🎉</span>
+              <span>🎉 This table's signature dish has been ordered - It's on the house! 🎉</span>
             </div>
           )}
         </div>

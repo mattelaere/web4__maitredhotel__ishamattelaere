@@ -10,7 +10,6 @@ const Room = ({
     return (
         <article>
             <h2>{room.name}</h2>
-
             {room.tableIds.map((tableId) => {
                 const table = allTables[tableId];
                 return (
